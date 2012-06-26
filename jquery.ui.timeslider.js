@@ -94,7 +94,9 @@
             clickSubmit: null,
 			inputsContainer: '.timesliderInputsContainer',
             addInputs: false,
-			clockFormat: 12
+			clockFormat: 12,
+			startTime: null,
+			endTime: null
         },
         _create: function() {
             var that = this,
@@ -104,7 +106,7 @@
                 o.sliderOptions.slide = that._slideTime;
                 o.sliderOptions.change = that._checkMax;
                 o.sliderOptions.stop = that._slideTime;
-                el.slider(o.sliderOptions);
+                
                 
                 o.errorMessage = $(o.errorMessage);
                 o.timeDisplay = $(o.timeDisplay);
@@ -129,6 +131,18 @@
 					o.inputsContainer = $(o.inputsContainer);
 				}
 				
+				if (o.startTime != null && o.endTime != null)
+				{
+					var time_parts = o.startTime.split(":");
+					var timeslider_start_time = (time_parts[0] * 60) + time_parts[1]*1;
+		
+					time_parts = o.endTime.split(":");
+					var timeslider_end_time = (time_parts[0] * 60) + time_parts[1]*1;
+
+					o.sliderOptions.values = [timeslider_start_time, timeslider_end_time];
+				}
+				
+				el.slider(o.sliderOptions);
                 that._slideTime.call(el);
         },
         _destroy: function() {
