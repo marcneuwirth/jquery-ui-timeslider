@@ -1,28 +1,44 @@
 (function($) {  
     $.widget("ui.timeslider", {
-        getTime: function(value){   
+        getTime: function(value, format){
+			
+			if (format == 'undefined')
+				format = 12;
+			
             var time = null,
                 from = new Date(value * 60 * 1000),
                 minutes = from.getMinutes(),
                 hours = from.getHours();
             
-            if (hours === 0) {
-                hours = 12;
-            }
-        
-            if (hours > 12) {
-                hours = hours - 12;
-                time = "PM";
-            }
-            else {
-                time = "AM";   
-            }
-        
-            if (minutes < 10) {
-                minutes = "0" + minutes;
-            }
-        
-            return hours + ":" + minutes + " " + time;
+			if (format == 12)
+			{
+				if (hours === 0) {
+					hours = 12;
+				}
+			
+				if (hours > 12) {
+					hours = hours - 12;
+					time = "PM";
+				}
+				else {
+					time = "AM";   
+				}
+			
+				if (minutes < 10) {
+					minutes = "0" + minutes;
+				}
+			
+				return hours + ":" + minutes + " " + time;
+			}
+			else
+			{
+
+				if (minutes < 10) {
+					minutes = "0" + minutes;
+				}
+			
+				return hours + ":" + minutes;
+			}
         },
         _slideTime: function (event, ui){
             var that = $(this),
@@ -30,25 +46,25 @@
                 endTime = null;
             
             if(that.slider( "option", "range" )){
-                startTime = that.timeslider('getTime',(that.slider("values", 0)));
-                endTime = that.timeslider('getTime', that.slider("values", 1));
+                startTime = that.timeslider('getTime',that.slider("values", 0), that.timeslider('option', 'clockFormat'));
+                endTime = that.timeslider('getTime', that.slider("values", 1), that.timeslider('option', 'clockFormat'));
             
                 that.timeslider('option', 'timeDisplay').text(startTime + ' - ' + endTime);
 				
 				if(that.timeslider('option', 'addInputs'))
 				{
-					that.timeslider('option', 'inputsContainer').find('input[name="start_time"]').val(startTime);
-					that.timeslider('option', 'inputsContainer').find('input[name="end_time"]').val(endTime);
+					that.timeslider('option', 'inputsContainer').find('input.start_time').val(startTime);
+					that.timeslider('option', 'inputsContainer').find('input.end_time').val(endTime);
 				}
             }
             else {
-                startTime = that.timeslider('getTime', that.slider("value"));
+                startTime = that.timeslider('getTime', that.slider("value"), that.timeslider('option', 'clockFormat'));
     
                 that.timeslider('option', 'timeDisplay').text(startTime);
 				
 				if(that.timeslider('option', 'addInputs'))
 				{
-					that.timeslider('option', 'inputsContainer').find('input[name="start_time"]').val(startTime);
+					that.timeslider('option', 'inputsContainer').find('input.start_time').val(startTime);
 				}
             }
         },
@@ -77,7 +93,8 @@
             submitButton: null,
             clickSubmit: null,
 			inputsContainer: '.timesliderInputsContainer',
-            addInputs: false
+            addInputs: false,
+			clockFormat: 12
         },
         _create: function() {
             var that = this,
@@ -107,8 +124,8 @@
 						el.append(inputsContainer_html);
 					}
 					
-					$(o.inputsContainer).append('<input type="hidden" name="start_time" value="" />');
-					$(o.inputsContainer).append('<input type="hidden" name="end_time" value="" />');
+					$(o.inputsContainer).append('<input type="hidden" name="start_time" value="" class="start_time" />');
+					$(o.inputsContainer).append('<input type="hidden" name="end_time" value="" class="end_time" />');
 					o.inputsContainer = $(o.inputsContainer);
 				}
 				
