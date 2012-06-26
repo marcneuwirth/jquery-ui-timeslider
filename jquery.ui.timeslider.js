@@ -33,12 +33,23 @@
                 startTime = that.timeslider('getTime',(that.slider("values", 0)));
                 endTime = that.timeslider('getTime', that.slider("values", 1));
             
-                 that.timeslider('option', 'timeDisplay').text(startTime + ' - ' + endTime);
+                that.timeslider('option', 'timeDisplay').text(startTime + ' - ' + endTime);
+				
+				if(that.timeslider('option', 'addInputs'))
+				{
+					that.timeslider('option', 'inputsContainer').find('input[name="start_time"]').val(startTime);
+					that.timeslider('option', 'inputsContainer').find('input[name="end_time"]').val(endTime);
+				}
             }
             else {
                 startTime = that.timeslider('getTime', that.slider("value"));
     
                 that.timeslider('option', 'timeDisplay').text(startTime);
+				
+				if(that.timeslider('option', 'addInputs'))
+				{
+					that.timeslider('option', 'inputsContainer').find('input[name="start_time"]').val(startTime);
+				}
             }
         },
         _checkMax: function(event, ui) {
@@ -64,8 +75,9 @@
             errorMessage: null,
             timeDisplay: null,
             submitButton: null,
-            clickSubmit: null
-            
+            clickSubmit: null,
+			inputsContainer: '.timesliderInputsContainer',
+            addInputs: false
         },
         _create: function() {
             var that = this,
@@ -81,7 +93,25 @@
                 o.timeDisplay = $(o.timeDisplay);
                 o.submitButton = $(o.submitButton).click(o.clickSubmit);
                 
-                
+				if(o.addInputs)
+				{
+					var container = o.inputsContainer;
+					
+					if(container.indexOf(".") != -1)
+						var inputsContainer_html = '<div class="'+container.split(".").join("")+'"></div>';
+					else
+						var inputsContainer_html = '<div id="'+container.split("#").join("")+'"></div>';
+					
+					if (!$(o.inputsContainer).size())
+					{
+						el.append(inputsContainer_html);
+					}
+					
+					$(o.inputsContainer).append('<input type="hidden" name="start_time" value="" />');
+					$(o.inputsContainer).append('<input type="hidden" name="end_time" value="" />');
+					o.inputsContainer = $(o.inputsContainer);
+				}
+				
                 that._slideTime.call(el);
         },
         _destroy: function() {
