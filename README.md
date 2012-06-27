@@ -10,6 +10,11 @@ This plugin adds some functionality on top of the jQuery UI Slider widget so tha
   * timeDisplay: Selector for the element that will contain the current selected time
   * submitButton: Selector for the element that will act as submit Button
   * clickSubmit: The function that will be executed when the submitButton is clicked
+  * inputsContainer: Selector for placing inputs for start time and end time in it. Works if addInputs is true. default: '.timesliderInputsContainer'
+  * addInputs: if true, will add inputs for start and end dates in the element defined by property inputsContainer. default: false
+ 	* clockFormat: formats for getTime(). Available 12, 24. default: 12
+		* startTime: startTime and endTime values will override sliderOptions.values. Format: "hh:mm". default: null
+		* endTime: startTime and endTime values will override sliderOptions.values. Format: "hh:mm". default: null
 
 
 ## Methods:
