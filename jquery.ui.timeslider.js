@@ -6,10 +6,12 @@
 				format = 12;
 			
             var time = null,
-                from = new Date(value * 60 * 1000),
-                minutes = from.getMinutes(),
-                hours = from.getHours();
-            
+                minutes,
+                hours;
+				
+			hours = Math.floor(value / 60);
+			minutes = value - (hours * 60);
+
 			if (format == 12)
 			{
 				if (hours === 0) {
@@ -134,12 +136,13 @@
 				if (o.startTime != null && o.endTime != null)
 				{
 					var time_parts = o.startTime.split(":");
-					var timeslider_start_time = (time_parts[0] * 60) + time_parts[1]*1;
+					var timeslider_start_time = ((time_parts[0]) * 60) + time_parts[1]*1;
 		
 					time_parts = o.endTime.split(":");
-					var timeslider_end_time = (time_parts[0] * 60) + time_parts[1]*1;
+					var timeslider_end_time = ((time_parts[0]) * 60) + time_parts[1]*1;
 
 					o.sliderOptions.values = [timeslider_start_time, timeslider_end_time];
+
 				}
 				
 				el.slider(o.sliderOptions);
