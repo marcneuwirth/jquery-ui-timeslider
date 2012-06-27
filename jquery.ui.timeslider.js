@@ -128,8 +128,12 @@
 						el.append(inputsContainer_html);
 					}
 					
-					$(o.inputsContainer).append('<input type="hidden" name="start_time" value="" class="start_time" />');
-					$(o.inputsContainer).append('<input type="hidden" name="end_time" value="" class="end_time" />');
+					if (!$("input.start_time",o.inputsContainer).size())
+						$(o.inputsContainer).append('<input type="hidden" name="start_time" value="" class="start_time" />');
+						
+					if (!$("input.end_time",o.inputsContainer).size())
+						$(o.inputsContainer).append('<input type="hidden" name="end_time" value="" class="end_time" />');
+						
 					o.inputsContainer = $(o.inputsContainer);
 				}
 				
