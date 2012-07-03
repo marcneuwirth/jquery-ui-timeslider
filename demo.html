@@ -93,6 +93,22 @@
                 e.preventDefault(); 
             }
 	    });
+	    
+	    
+	    $("#slider3").timeslider({
+            sliderOptions: {
+    	        range: true, 
+		        min: 300, 
+		        max: 3179, 
+		        values: [900, 1500],
+		        step:5
+            },
+		clockFormat: 24, // formats gor get time. Available 12, 24
+		addInputs: true, // will add inputs for start and end dates in the element defined by property inputsContainer
+		inputsContainer:  '.timesliderInputsContainer',
+		startTime: "12:20", // startTime and endTime values will override sliderOptions.values
+		endTime: "14:35"
+	    });
         </script>
     </body>
 </html>
