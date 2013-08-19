@@ -48,8 +48,8 @@
                 endTime = null;
             
             if(that.slider( "option", "range" )){
-                startTime = that.timeslider('getTime',that.slider("values", 0), that.timeslider('option', 'clockFormat'));
-                endTime = that.timeslider('getTime', that.slider("values", 1), that.timeslider('option', 'clockFormat'));
+                startTime = that.timeslider('getTime', ui.values[0] , that.timeslider('option', 'clockFormat'));
+                endTime = that.timeslider('getTime', ui.values[1] , that.timeslider('option', 'clockFormat'));
             
                 that.timeslider('option', 'timeDisplay').text(startTime + ' - ' + endTime);
 				
